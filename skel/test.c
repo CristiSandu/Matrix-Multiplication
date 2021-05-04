@@ -130,9 +130,14 @@ int main(int argc, char const *argv[]) {
   /*memcpy(BB_tr, B, N * N * sizeof(*BB_tr));
   cblas_dgemm(CblasRowMajor, CblasNoTrans, CblasTrans, N, N, N, 1.0, B, N, B, N,
               0.0, BB_tr, N);*/
-  memcpy(ABB_tr, A, N * N * sizeof(*ABB_tr));
-  cblas_dtrmm(CblasRowMajor, CblasLeft, CblasUpper, CblasNoTrans, CblasNonUnit,
-              N, N, 1.0, ABB_tr, N, B, N);
+  // memcpy(ABB_tr, A, N * N * sizeof(*ABB_tr));
+  // cblas_dtrmm(CblasRowMajor, CblasLeft, CblasUpper, CblasNoTrans,
+  // CblasNonUnit,
+  //             N, N, 1.0, ABB_tr, N, B, N);
+
+  memcpy(AA_tr, A, N * N * sizeof(*AA_tr));
+  cblas_dtrmm(CblasRowMajor, CblasLeft, CblasTrans, CblasUpper, CblasNonUnit, N,
+              N, 1.0, A, N, AA_tr, N);
 
   for (int i = 0; i < 6; ++i) {
     for (int j = 0; j < 6; ++j) {
@@ -152,7 +157,7 @@ int main(int argc, char const *argv[]) {
 
   for (int i = 0; i < 6; ++i) {
     for (int j = 0; j < 6; ++j) {
-      printf("%f ", BB_tr[i * N + j]);
+      printf("%f ", AA_tr[i * N + j]);
     }
     printf("\n");
   }

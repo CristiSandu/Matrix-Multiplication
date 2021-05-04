@@ -33,9 +33,14 @@ double *my_solver(int N, double *A, double *B) {
   cblas_dgemm(CblasRowMajor, CblasNoTrans, CblasTrans, N, N, N, 1.0, B, N, B, N,
               0.0, BB_tr, N);
 
-  memcpy(ABB_tr, A, N * N * sizeof(*ABB_tr));
+  memcpy(ABB_tr, BB_tr, N * N * sizeof(*ABB_tr));
   cblas_dtrmm(CblasRowMajor, CblasLeft, CblasUpper, CblasNoTrans, CblasNonUnit,
-              N, N, 1.0, ABB_tr, N, BB_tr, N);
+              N, N, 1.0, A, N, ABB_tr, N);
+
+  memcpy(AA_tr, A, N * N * sizeof(*AA_tr));
+  cblas_dtrmm(CblasRowMajor, CblasLeft, CblasTrans, CblasUpper, CblasNonUnit, N,
+              N, 1.0, A, N, AA_tr, N);
+
   /*
     memcpy(AA_tr, A, N * N * sizeof(*AA_tr));
     cblas_dtrmm(CblasRowMajor, CblasLeft, CblasUpper, CblasNoTrans,
