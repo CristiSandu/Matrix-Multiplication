@@ -13,9 +13,9 @@ double *my_solver(int N, double *A, double *B) {
 
   /*
         // C=A × B × Bt + At × A
-        B*B_t = DGEMM
-        A*BB_T = DTRMM
-        At*A = DTRMM
+        B*B_t = DGEMM nu este triunghiulara
+        A*BB_T = DTRMM A este triunghoulara
+        At*A = DTRMM At*A este triunghiulara
   */
 
   double *BB_tr;
@@ -40,9 +40,12 @@ double *my_solver(int N, double *A, double *B) {
   cblas_dtrmm(CblasRowMajor, CblasLeft, CblasUpper, CblasTrans, CblasNonUnit, N,
               N, 1.0, A, N, AA_tr, N);
 
-  for (i = 0; i != N; i++)
-    for (j = 0; j != N; j++)
+  for (i = 1; i != N; i++)
+    for (j = 1; j != N; j++)
       ABB_tr[i * N + j] += AA_tr[i * N + j];
+
+  free(AA_tr);
+  free(BB_tr);
 
   return ABB_tr;
 }
