@@ -15,15 +15,12 @@ double *my_solver(int N, double *A, double *B) {
   int i, j, k;
 
   double *ABB_tr;
-  double *OUT;
-
   double *BB_tr;
   double *AA_tr;
 
   // allocate memory fro new matrix
 
   ABB_tr = malloc(N * N * sizeof(*ABB_tr));
-  OUT = malloc(N * N * sizeof(*OUT));
   BB_tr = malloc(N * N * sizeof(*BB_tr));
   AA_tr = malloc(N * N * sizeof(*AA_tr));
 
