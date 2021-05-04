@@ -43,8 +43,8 @@ double *my_solver(int N, double *A, double *B) {
               N, 1.0, A, N, AA_tr, N);
 
   // ABB_t + AA_t
-  for (i = 1; i != N; i++)
-    for (j = 1; j != N; j++)
+  for (i = 0; i != N; i++)
+    for (j = 0; j != N; j++)
       ABB_tr[i * N + j] += AA_tr[i * N + j];
 
   free(AA_tr);
