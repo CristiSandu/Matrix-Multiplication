@@ -132,7 +132,7 @@ int main(int argc, char const *argv[]) {
               0.0, BB_tr, N);*/
   memcpy(ABB_tr, A, N * N * sizeof(*ABB_tr));
   cblas_dtrmm(CblasRowMajor, CblasLeft, CblasUpper, CblasNoTrans, CblasNonUnit,
-              N, N, 1.0, ABB_tr, N, BB_tr, N);
+              N, N, 1.0, ABB_tr, N, B, N);
 
   for (int i = 0; i < 6; ++i) {
     for (int j = 0; j < 6; ++j) {
