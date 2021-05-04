@@ -28,9 +28,19 @@ double *my_solver(int N, double *A, double *B) {
   AA_tr = malloc(N * N * sizeof(*AA_tr));
   OUT = malloc(N * N * sizeof(*OUT));
 
+  // B*Bt
   memcpy(BB_tr, B, N * N * sizeof(*BB_tr));
   cblas_dgemm(CblasRowMajor, CblasNoTrans, CblasTrans, N, N, N, 1.0, B, N, B, N,
               0.0, BB_tr, N);
+
+  memcpy(ABB_tr, A, N * N * sizeof(*ABB_tr));
+  cblas_dtrmm(CblasRowMajor, CblasLeft, CblasUpper, CblasNoTrans, CblasNonUnit,
+              N, N, 1.0, ABB_tr, N, BB_tr, N);
+  /*
+    memcpy(AA_tr, A, N * N * sizeof(*AA_tr));
+    cblas_dtrmm(CblasRowMajor, CblasLeft, CblasUpper, CblasNoTrans,
+    CblasNonUnit, N, N, 1.0, ABB_tr, N, BB_tr, N);
+  */
   return BB_tr;
 }
 

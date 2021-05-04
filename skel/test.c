@@ -127,9 +127,12 @@ int main(int argc, char const *argv[]) {
   AA_tr = malloc(N * N * sizeof(*AA_tr));
   OUT = malloc(N * N * sizeof(*OUT));
 
-  memcpy(BB_tr, B, N * N * sizeof(*BB_tr));
+  /*memcpy(BB_tr, B, N * N * sizeof(*BB_tr));
   cblas_dgemm(CblasRowMajor, CblasNoTrans, CblasTrans, N, N, N, 1.0, B, N, B, N,
-              0.0, BB_tr, N);
+              0.0, BB_tr, N);*/
+  memcpy(ABB_tr, A, N * N * sizeof(*ABB_tr));
+  cblas_dtrmm(CblasRowMajor, CblasLeft, CblasUpper, CblasNoTrans, CblasNonUnit,
+              N, N, 1.0, ABB_tr, N, BB_tr, N);
 
   for (int i = 0; i < 6; ++i) {
     for (int j = 0; j < 6; ++j) {
