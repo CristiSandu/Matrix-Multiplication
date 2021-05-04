@@ -6,9 +6,11 @@
 
 int main(int argc, char const *argv[]) {
 
-  int N = 6, i, j;
+  int N = 6;
   double *A;
   double *B;
+  register int i, k, j;
+
   int numMatrixElems = N * N;
   A = malloc(numMatrixElems * sizeof(*A));
   B = malloc(numMatrixElems * sizeof(*B));
@@ -117,7 +119,6 @@ int main(int argc, char const *argv[]) {
   //     OUT[i * N + j] = ABB_tr[i * N + j] + AA_tr[i * N + j];
   //   }
   // }
-
   double *BB_tr;
   double *ABB_tr;
   double *OUT;
@@ -135,9 +136,59 @@ int main(int argc, char const *argv[]) {
   // CblasNonUnit,
   //             N, N, 1.0, ABB_tr, N, B, N);
 
-  memcpy(AA_tr, A, N * N * sizeof(*AA_tr));
-  cblas_dtrmm(CblasRowMajor, CblasLeft, CblasUpper, CblasTrans, CblasNonUnit, N,
-              N, 1.0, A, N, AA_tr, N);
+  // memcpy(AA_tr, A, N * N * sizeof(*AA_tr));
+  // cblas_dtrmm(CblasRowMajor, CblasLeft, CblasUpper, CblasTrans, CblasNonUnit,
+  // N,
+  //             N, 1.0, A, N, AA_tr, N);
+
+  // for (i = 0; i != N; ++i) {
+  //   register double *BB_tr_ptr = BB_tr + i * N;
+  //   register double *B_cpy = B + i * N;
+
+  //   for (j = 0; j != N; ++j, ++BB_tr_ptr) {
+  //     register double res = 0;
+
+  //     register double *B_ptr = B_cpy;
+  //     register double *B_tr_ptr = B + j * N;
+
+  //     for (k = 0; k != N; ++k, ++B_ptr, ++B_tr_ptr) {
+  //       res += *B_ptr * *B_tr_ptr;
+  //     }
+  //     *BB_tr_ptr = res;
+  //   }
+  // }
+  // memcpy(BB_tr, B, N * N * sizeof(*BB_tr));
+
+  // for (i = 0; i != N; ++i) {
+  //   register double *ABB_tr_ptr = ABB_tr + i * N;
+  //   register double *A_cpy = A + i * N;
+
+  //   for (j = 0; j != N; ++j, ++ABB_tr_ptr) {
+  //     register double res = 0;
+  //     register double *A_ptr = A_cpy + i;
+  //     register double *BB_tr_ptr = BB_tr + i * N + j;
+
+  //     for (k = i; k != N; ++k, ++A_ptr, BB_tr_ptr += N) {
+  //       res += *A_ptr * *BB_tr_ptr;
+  //     }
+  //     *ABB_tr_ptr += res;
+  //   }
+  // }
+
+  for (i = 0; i < N; ++i) {
+    register double *AA_tr_ptr = AA_tr + i * N;
+    register double *A_cpy = A + i * N;
+
+    for (j = 0; j < N; ++j, ++AA_tr_ptr) {
+      register double res = 0;
+      register double *A_ptr = A_cpy + i;
+      register double *A_tr_ptr = A + i * N + j;
+      for (k = 0; k <= i; ++k, ++A_ptr, ++A_tr_ptr) {
+        res += *A_tr_ptr * *A_ptr;
+      }
+      *AA_tr_ptr += res;
+    }
+  }
 
   for (int i = 0; i < 6; ++i) {
     for (int j = 0; j < 6; ++j) {

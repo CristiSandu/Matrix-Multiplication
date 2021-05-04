@@ -14,8 +14,8 @@ double *my_solver(int N, double *A, double *B) {
   /*
         // C=A × B × Bt + At × A
         B*B_t = DGEMM nu este triunghiulara
-        A*BB_T = DTRMM A este triunghoulara
-        At*A = DTRMM At*A este triunghiulara
+        A*BB_t = DTRMM A este triunghoulara
+        A_t*A = DTRMM At*A este triunghiulara
   */
 
   double *BB_tr;
@@ -28,18 +28,21 @@ double *my_solver(int N, double *A, double *B) {
   AA_tr = malloc(N * N * sizeof(*AA_tr));
 
   // B*Bt
-  memcpy(BB_tr, B, N * N * sizeof(*BB_tr));
+  // memcpy(BB_tr, B, N * N * sizeof(*BB_tr));
   cblas_dgemm(CblasRowMajor, CblasNoTrans, CblasTrans, N, N, N, 1.0, B, N, B, N,
               0.0, BB_tr, N);
 
+  // A*BB_t
   memcpy(ABB_tr, BB_tr, N * N * sizeof(*ABB_tr));
   cblas_dtrmm(CblasRowMajor, CblasLeft, CblasUpper, CblasNoTrans, CblasNonUnit,
               N, N, 1.0, A, N, ABB_tr, N);
 
+  // A_t*A
   memcpy(AA_tr, A, N * N * sizeof(*AA_tr));
   cblas_dtrmm(CblasRowMajor, CblasLeft, CblasUpper, CblasTrans, CblasNonUnit, N,
               N, 1.0, A, N, AA_tr, N);
 
+  // ABB_t + AA_t
   for (i = 1; i != N; i++)
     for (j = 1; j != N; j++)
       ABB_tr[i * N + j] += AA_tr[i * N + j];
