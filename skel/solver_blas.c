@@ -21,12 +21,11 @@ double *my_solver(int N, double *A, double *B) {
   double *BB_tr;
   double *ABB_tr;
   double *AA_tr;
-  double *OUT;
+  int i, j;
 
   ABB_tr = malloc(N * N * sizeof(*ABB_tr));
   BB_tr = malloc(N * N * sizeof(*BB_tr));
   AA_tr = malloc(N * N * sizeof(*AA_tr));
-  OUT = malloc(N * N * sizeof(*OUT));
 
   // B*Bt
   memcpy(BB_tr, B, N * N * sizeof(*BB_tr));
@@ -38,15 +37,14 @@ double *my_solver(int N, double *A, double *B) {
               N, N, 1.0, A, N, ABB_tr, N);
 
   memcpy(AA_tr, A, N * N * sizeof(*AA_tr));
-  cblas_dtrmm(CblasRowMajor, CblasLeft, CblasTrans, CblasUpper, CblasNonUnit, N,
+  cblas_dtrmm(CblasRowMajor, CblasLeft, CblasUpper, CblasTrans, CblasNonUnit, N,
               N, 1.0, A, N, AA_tr, N);
 
-  /*
-    memcpy(AA_tr, A, N * N * sizeof(*AA_tr));
-    cblas_dtrmm(CblasRowMajor, CblasLeft, CblasUpper, CblasNoTrans,
-    CblasNonUnit, N, N, 1.0, ABB_tr, N, BB_tr, N);
-  */
-  return BB_tr;
+  for (i = 0; i != N; i++)
+    for (j = 0; j != N; j++)
+      ABB_tr[i * N + j] += AA_tr[i * N + j];
+
+  return ABB_tr;
 }
 
 /*
