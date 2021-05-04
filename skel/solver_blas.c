@@ -28,7 +28,6 @@ double *my_solver(int N, double *A, double *B) {
   AA_tr = malloc(N * N * sizeof(*AA_tr));
 
   // B*Bt
-  // memcpy(BB_tr, B, N * N * sizeof(*BB_tr));
   cblas_dgemm(CblasRowMajor, CblasNoTrans, CblasTrans, N, N, N, 1.0, B, N, B, N,
               0.0, BB_tr, N);
 
@@ -52,11 +51,3 @@ double *my_solver(int N, double *A, double *B) {
 
   return ABB_tr;
 }
-
-/*
- a = [0.11 0.12 0.13;
-      0.21 0.22 0.23]
-b = [1011 1012;
-        1021 1022;
-        1031 1032 ]
-*/

@@ -4,8 +4,8 @@
 #include <string.h>
 #include <sys/time.h>
 
-#define MIN(a, b) ((a < b ? a : b))
-#define MAX(a, b) ((a > b ? a : b))
+#define MIN(x, y) ((x < y ? x : y))
+#define MAX(x, y) ((x > y ? x : y))
 
 int main(int argc, char const *argv[]) {
 
