@@ -6,7 +6,7 @@
 
 int main(int argc, char const *argv[]) {
 
-  int N = 6, i, j, k;
+  int N = 6, i, j;
   double *A;
   double *B;
   int numMatrixElems = N * N;
