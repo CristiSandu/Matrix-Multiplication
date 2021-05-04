@@ -2,7 +2,6 @@
  * Tema 2 ASC
  * 2021 Spring
  */
-#include "cblas.h"
 #include "utils.h"
 
 /*
@@ -31,21 +30,21 @@ double *my_solver(int N, double *A, double *B) {
   AA_tr = malloc(N * N * sizeof(*AA_tr));
 
   // AA_tr
-  for (i = 0; i != N; ++i) {
-    for (j = 0; j != N; ++j) {
-      for (k = 0; k != N; ++k) {
+  // for (i = 0; i != N; ++i) {
+  //   for (j = 0; j != N; ++j) {
+  //     for (k = 0; k != N; ++k) {
+  //       AA_tr[i * N + j] += A[k * N + i] * A[k * N + j];
+  //     }
+  //   }
+  // }
+  // try to optimize
+  for (i = 0; i < N; i++) {
+    for (j = 0; j < N; j++) {
+      for (k = 0; k <= i; k++) {
         AA_tr[i * N + j] += A[k * N + i] * A[k * N + j];
       }
     }
   }
-  // try to optimize
-  /*  for (i = 0; i < N; i++) {
-      for (j = 0; j < N; j++) {
-        for (k = 0; k <= i; k++) {
-          AA_tr[i * N + j] += A[k * N + i] * A[k * N + j];
-        }
-      }
-    }*/
 
   // BB_tr
   for (i = 0; i != N; ++i) {
