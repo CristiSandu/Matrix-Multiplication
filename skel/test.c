@@ -4,6 +4,9 @@
 #include <string.h>
 #include <sys/time.h>
 
+#define MIN(a, b) ((a < b ? a : b))
+#define MAX(a, b) ((a > b ? a : b))
+
 int main(int argc, char const *argv[]) {
 
   int N = 6;
@@ -175,21 +178,31 @@ int main(int argc, char const *argv[]) {
   //   }
   // }
 
+  // for (i = 0; i < N; ++i) {
+  //   register double *AA_tr_ptr = AA_tr + i * N;
+  //   register double *A_cpy = A + i * N;
+
+  //   for (j = 0; j < N; ++j, ++AA_tr_ptr) {
+  //     register double res = 0;
+  //     register double *A_ptr = A_cpy + i;
+  //     register double *A_tr_ptr = A + i * N + j;
+  //     for (k = 0; k <= MIN(i, j); ++k, ++A_ptr, A_tr_ptr += N) {
+  //       res += *A_tr_ptr * *A_ptr;
+  //     }
+  //     *AA_tr_ptr += res;
+  //   }
+  // }
+
   for (i = 0; i < N; ++i) {
     register double *AA_tr_ptr = AA_tr + i * N;
-    register double *A_cpy = A + i * N;
-
     for (j = 0; j < N; ++j, ++AA_tr_ptr) {
       register double res = 0;
-      register double *A_ptr = A_cpy + i;
-      register double *A_tr_ptr = A + i * N + j;
-      for (k = 0; k <= i; ++k, ++A_ptr, ++A_tr_ptr) {
-        res += *A_tr_ptr * *A_ptr;
+      for (k = 0; k <= MIN(i, j); ++k) {
+        res += A[k * N + i] * A[k * N + j];
       }
       *AA_tr_ptr += res;
     }
   }
-
   for (int i = 0; i < 6; ++i) {
     for (int j = 0; j < 6; ++j) {
       printf("%f  ", A[i * N + j]);

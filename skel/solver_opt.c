@@ -3,6 +3,7 @@
  * 2021 Spring
  */
 #include "utils.h"
+#define MIN(a, b) ((a < b ? a : b))
 
 /*
  * Add your optimized implementation here
@@ -37,19 +38,30 @@ double *my_solver(int N, double *A, double *B) {
   // }
   // try to optimize
 
-  for (i = 0; i < N; i++) {
-    register double *AA_tr_ptr = AA_tr + i * N;
-    register double *A_cpy = A + i * N;
+  //   for (i = 0; i < N; i++) {
+  //     register double *AA_tr_ptr = AA_tr + i * N;
+  //     register double *A_cpy = A + i * N;
 
+  //     for (j = 0; j < N; ++j, ++AA_tr_ptr) {
+  //       register double res = 0;
+  //       register double *A_ptr = A_cpy + i;
+  //       register double *A_tr_ptr = A + i * N + j;
+  //       for (k = 0; k <= i; ++k, ++A_ptr, A_tr_ptr += N) {
+  //         // AA_tr[i * N + j] += A[k * N + i] * A[k * N + j];
+  //         res += *A_ptr * *A_tr_ptr;
+  //       }
+  //       *A_tr_ptr += res;
+  //     }
+  //   }
+
+  for (i = 0; i < N; ++i) {
+    register double *AA_tr_ptr = AA_tr + i * N;
     for (j = 0; j < N; ++j, ++AA_tr_ptr) {
       register double res = 0;
-      register double *A_ptr = A_cpy + i;
-      register double *A_tr_ptr = A + i * N + j;
-      for (k = 0; k <= i; ++k, ++A_ptr, A_tr_ptr += N) {
-        // AA_tr[i * N + j] += A[k * N + i] * A[k * N + j];
-        res += *A_ptr * *A_tr_ptr;
+      for (k = 0; k <= MIN(i, j); ++k) {
+        res += A[k * N + i] * A[k * N + j];
       }
-      *A_tr_ptr += res;
+      *AA_tr_ptr += res;
     }
   }
 
@@ -107,12 +119,11 @@ double *my_solver(int N, double *A, double *B) {
   // ABB_tr + AA_tr
   for (i = 0; i != N; ++i) {
     for (j = 0; j != N; ++j) {
-      OUT[i * N + j] = ABB_tr[i * N + j] + AA_tr[i * N + j];
+      ABB_tr[i * N + j] += AA_tr[i * N + j];
     }
   }
 
-  free(ABB_tr);
   free(AA_tr);
   free(BB_tr);
-  return OUT;
+  return ABB_tr;
 }
