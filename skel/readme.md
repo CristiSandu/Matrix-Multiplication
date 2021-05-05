@@ -76,3 +76,44 @@ Am aplicat aceasta optimizare la inmultirile `B * B_tr ; A * BB_tr` si la `AA_tr
 ### Utilizarea registrilor pentru stocarea variabileor utilizate
 
 In acest caz am utilizat pentru toate variabilele necesare inmultiri registre ale procesorului pentru a reduce timpul de acces al acestora in memorie. Tinand cont ca operatia se face pe un sistem de 64 biti am considerat ca sunt suficiente.
+
+## Timpi rulare
+
+- neopt
+
+```bash
+    Run=./tema2_neopt: N=400: Time=1.029470
+    Run=./tema2_neopt: N=800: Time=8.010292
+    Run=./tema2_neopt: N=1000: Time=15.337305
+    Run=./tema2_neopt: N=1200: Time=26.801756
+    Run=./tema2_neopt: N=1400: Time=43.401424
+    Run=./tema2_neopt: N=1600: Time=72.687347
+    Run=./tema2_neopt: N=1800: Time=98.000114
+```
+
+- opt
+
+```bash
+    Run=./tema2_opt_m: N=400: Time=0.320609
+    Run=./tema2_opt_m: N=800: Time=2.161054
+    Run=./tema2_opt_m: N=1000: Time=4.003022
+    Run=./tema2_opt_m: N=1200: Time=7.135870
+    Run=./tema2_opt_m: N=1400: Time=11.850821
+    Run=./tema2_opt_m: N=1600: Time=21.183496
+    Run=./tema2_opt_m: N=1800: Time=27.663012
+```
+
+- blas
+
+```bash
+    Run=./tema2_blas: N=400: Time=0.037713
+    Run=./tema2_blas: N=800: Time=0.211800
+    Run=./tema2_blas: N=1000: Time=0.386715
+    Run=./tema2_blas: N=1200: Time=0.656922
+    Run=./tema2_blas: N=1400: Time=1.056121
+    Run=./tema2_blas: N=1600: Time=1.534150
+    Run=./tema2_blas: N=1800: Time=2.169552
+```
+
+Iar ca si grafic putem observa urmatoarele tendinte
+![](https://github.com/CristiSandu/Matrix-Multiplication/blob/main/skel/comparatie.svg)
