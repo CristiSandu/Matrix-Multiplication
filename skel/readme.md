@@ -116,4 +116,4 @@ In acest caz am utilizat pentru toate variabilele necesare inmultiri registre al
 ```
 
 Iar ca si grafic putem observa urmatoarele tendinte  
-![](https://github.com/CristiSandu/Matrix-Multiplication/blob/main/skel/comparatie.svg)
+![](https://github.com/CristiSandu/Matrix-Multiplication/blob/main/skel/Graphs/comparatie.svg)
