@@ -1,0 +1,10 @@
+OPT SOLVER
+Run=./tema2_opt_m: N=400: Time=0.310487
+OPT SOLVER
+Run=./tema2_opt_m: N=800: Time=2.176964
+OPT SOLVER
+Run=./tema2_opt_m: N=1200: Time=7.113023
+<<< Bonus=2p >>>
+./compare out1 /export/asc/tema2/out1 OK
+./compare out2 /export/asc/tema2/out2 OK
+./compare out3 /export/asc/tema2/out3 OK
