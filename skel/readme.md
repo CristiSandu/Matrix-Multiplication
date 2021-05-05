@@ -115,5 +115,5 @@ In acest caz am utilizat pentru toate variabilele necesare inmultiri registre al
     Run=./tema2_blas: N=1800: Time=2.169552
 ```
 
-Iar ca si grafic putem observa urmatoarele tendinte
+Iar ca si grafic putem observa urmatoarele tendinte  
 ![](https://github.com/CristiSandu/Matrix-Multiplication/blob/main/skel/comparatie.svg)
