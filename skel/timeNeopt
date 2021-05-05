@@ -1,0 +1,9 @@
+NEOPT SOLVER
+Run=./tema2_neopt: N=400: Time=1.040480
+NEOPT SOLVER
+Run=./tema2_neopt: N=800: Time=7.959086
+NEOPT SOLVER
+Run=./tema2_neopt: N=1200: Time=27.044937
+./compare out1 /export/asc/tema2/out1 OK
+./compare out2 /export/asc/tema2/out2 OK
+./compare out3 /export/asc/tema2/out3 OK
