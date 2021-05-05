@@ -6,7 +6,7 @@ A este o matrice triunghiularain )
 Tema va contine urmatoarele implementari:
 
 - **blas** varinat cea mai optima utilizand functii blas ;
-- **neopt** implementarea default cu optimizarile doar pentru A care este tridiagonala;
+- **neopt** implementarea default cu optimizarile doar pentru A care este superior triunghiulara;
 - **opt** prezinta implementare optimizata a variantei _neopt_;
 
 ## **neopt**
@@ -37,7 +37,7 @@ La aceasta implementare m-am folosit de functiile din [**BLAS Atlas**](http://ww
 - **A \* BB_tr = DTRMM** (cblas_dtrmm) - am ales aceasta functie deoarece A este superior triunghiulara
 - **A_tr \* A = DTRMM** (cblas_dtrmm) - acelasi criteriu A este superior triunghiulara si A_tr autoamt inferior triunghiulara
 
-**DGEMM** rezolva o ecuatie de forma `rez <= alpha*A*B + beta*rez` astfel pentru cazul nostru de fata B \* B*tr avem : \_beta* = 0.0, _alpha_ = 1.0 , _A_ = B si _B_ = B_tr
+**DGEMM** rezolva o ecuatie de forma `rez <= alpha*A*B + beta*rez` astfel pentru cazul nostru de fata B \* Btr avem : \_beta\* = 0.0, \_alpha\* = 1.0 , \_A\* = B si _B_ = B_tr
 Ca si format de apelare avem:
 
 ```c
@@ -65,3 +65,14 @@ Ca si la functia precedenta trebuie sa punem niste flag-uri care sa tina cont de
 Rezultatul final l-am adunat normal parcurgand matricile rezultate din operatiile anterioare.
 
 ## **opt**
+
+In aceasta implementare am folosit urmatoarele optimizari prezentate in [Laboratorul 5](https://ocw.cs.pub.ro/courses/asc/laboratoare/05).
+
+### Detectarea constantelor din bucle
+
+Similar cu exercitiile din laborator am eliminat operatiile de forma `i * N + j` din parcurgerea matricei astfel folosind poineri la matrice scazand numarul de operatii floting point efectuate in calculare indexului. Singurul inconveninet apare cand trebuie sa incrementam separat poiter-ul.
+Am aplicat aceasta optimizare la inmultirile `B * B_tr ; A * BB_tr` si la `AA_tr` doar pentru valoarea finala a rezultatului.
+
+### Utilizarea registrilor pentru stocarea variabileor utilizate
+
+In acest caz am utilizat pentru toate variabilele necesare inmultiri registre ale procesorului pentru a reduce timpul de acces al acestora in memorie. Tinand cont ca operatia se face pe un sistem de 64 biti am considerat ca sunt suficiente.
