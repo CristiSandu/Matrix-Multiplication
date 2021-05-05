@@ -1,0 +1,14 @@
+NEOPT SOLVER
+Run=./tema2_neopt: N=400: Time=1.029470
+NEOPT SOLVER
+Run=./tema2_neopt: N=800: Time=8.010292
+NEOPT SOLVER
+Run=./tema2_neopt: N=1000: Time=15.337305
+NEOPT SOLVER
+Run=./tema2_neopt: N=1200: Time=26.801756
+NEOPT SOLVER
+Run=./tema2_neopt: N=1400: Time=43.401424
+NEOPT SOLVER
+Run=./tema2_neopt: N=1600: Time=72.687347
+NEOPT SOLVER
+Run=./tema2_neopt: N=1800: Time=98.000114

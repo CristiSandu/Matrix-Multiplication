@@ -1,0 +1,18 @@
+gcc  compare.c utils.h -lm -o compare
+gcc -Wall -Werror -O0 solver_blas.c main.c utils.h -L/usr/lib64/atlas -lsatlas -o tema2_blas
+gcc -Wall -Werror -O0 solver_neopt.c main.c utils.h -o tema2_neopt
+gcc -Wall -Werror -O0 solver_opt.c main.c utils.h -o tema2_opt_m
+NEOPT SOLVER
+Run=./tema2_neopt: N=400: Time=29.593037
+OPT SOLVER
+Run=./tema2_opt_m: N=400: Time=9.825228
+<<< Bonus=0p >>>
+BLAS SOLVER
+Run=./tema2_blas: N=400: Time=1.378424
+NEOPT SOLVER
+Run=./tema2_neopt: N=400: Time=11.692004
+OPT SOLVER
+Run=./tema2_opt_m: N=400: Time=4.474419
+<<< Bonus=0p >>>
+BLAS SOLVER
+Run=./tema2_blas: N=400: Time=1.451064
