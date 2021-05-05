@@ -117,3 +117,28 @@ In acest caz am utilizat pentru toate variabilele necesare inmultiri registre al
 
 Iar ca si grafic putem observa urmatoarele tendinte  
 ![](https://github.com/CristiSandu/Matrix-Multiplication/blob/main/skel/Graphs/comparatie.svg)
+
+Astfel se poate observa ca implementarile au urmatoarele ordine:
+
+- opt este de 4 ori mai buna ca cea neopt
+- blas este de 10 ori mai buna ca cea opt
+
+Se poate observa ca graficul cu cat inainteaza varainta optima de departeaza de cea blas, iar cea neoptima cu o viteza mai mare fata de cea optima.
+
+## Cachegrind comparatie
+
+In campul `I refs` se observa ca numarul de instriuctiuni executate:
+| Exec | I refs val | Obs|
+| :---- | :-------- |:-------|
+| neopt | 5,475,216,756 | - |
+| opt |1,901,971,381 | scade cu 4 mld fata de varainta neoptima|
+| blas | 194,274,252| scade mult mai mult|
+
+In campult `D refs` se observa ca numarul de accesari ale memoriei RAM din cash scade cu cat optimizarea este mai buna
+| Exec | I refs val | Obs|
+| :---- | :-------- |:-------|
+| neopt |2,759,599,044 | - |
+| opt |460,821,908 | scade fata de neopt|
+| blas | 76,359,478 | scade cu mult fata de opt|
+
+Ca si downgrade se poate observa ca rata de cash miss uri este de 11.3% fata de 1.9% varianta neopt.
