@@ -15,4 +15,4 @@
  ./tema2_opt_m input > opt_m.graf
  ./tema2_neopt input > neopt.graf
 
- 
+    
